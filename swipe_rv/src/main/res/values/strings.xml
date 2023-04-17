@@ -1,0 +1,5 @@
+<resources>
+    <string name="classic_designer">com.ndsoftwares.swipe_rv.NDSwipeLayout$ClassicDesigner</string>
+    <string name="overlay_designer">com.ndsoftwares.swipe_rv.NDSwipeLayout$OverlayDesigner</string>
+    <string name="parallax_designer">com.ndsoftwares.swipe_rv.NDSwipeLayout$ParallaxDesigner</string>
+</resources>

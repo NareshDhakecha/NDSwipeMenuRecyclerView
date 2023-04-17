@@ -1,0 +1,80 @@
+package com.ndsoftwares.swipemenurecyclerview
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.viewbinding.ViewBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.ndsoftwares.swipemenurecyclerview.databinding.FragmentDemoBinding
+import com.ndsoftwares.swipemenurecyclerview.items.*
+
+class DemoFragment : Fragment() {
+
+    private var _binding: FragmentDemoBinding? = null
+
+    private val binding get() = _binding!!
+    private val styleBinding get() = binding.fragmentStyleBinding
+
+    lateinit var behavior: BottomSheetBehavior<*>
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentDemoBinding.inflate(inflater, container, false)
+        binding.recycleView
+            .addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        behavior = BottomSheetBehavior.from(binding.bottomSheet)
+        behavior.isHideable = true
+        behavior.peekHeight = 0
+        binding.floatingButton.setOnClickListener {
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
+        styleBinding.apply {
+            itemClassic.content.setOnClickListener {
+                changeStyle(ClassicItem())
+            }
+
+            itemOverlay.content.setOnClickListener {
+                changeStyle(OverlayItem())
+            }
+
+            itemParallax.content.setOnClickListener {
+                changeStyle(ParallaxItem())
+            }
+
+            itemLong.content.setOnClickListener {
+                changeStyle(LongItem())
+            }
+
+            itemTencentQQ.content.setOnClickListener {
+                changeStyle(QQItem())
+            }
+
+            itemWithMargin.content.setOnClickListener {
+                changeStyle(WithMarginItem())
+            }
+
+            itemWithPadding.content.setOnClickListener {
+                changeStyle(WithPaddingItem())
+            }
+        }
+        changeStyle(ClassicItem())
+        return binding.root
+    }
+
+    private fun <T: ViewBinding> changeStyle(baseItem: BaseItem<T>) {
+        binding.recycleView.adapter = DemoAdapter(baseItem)
+        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}
